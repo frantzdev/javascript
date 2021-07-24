@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+
+
+
+  <style>
+    html {
+      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hour-hand {
+      height: 100px;
+      width: 6px;
+      background: black;
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 27%;
+      transform-origin: bottom center;
+      transform: rotate(0deg);
+    }
+    
+    .min-hand {
+      width: 4px;
+      height: 125px;
+      background: black;
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 35%;
+      transform-origin: bottom center;
+      transform: rotate(90deg);
+    }
+
+    .second-hand {
+      width: 2px;
+      height: 135px;
+      background: red;
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: -37%;
+      bottom: 0;
+      transform-origin: bottom center;
+      transform: rotate(210deg);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: -7%;
+    }
+
+  </style>
+
+  <script>
+    /*lancer la fonction pour l'horloge*/
+    clock();
+
+    function clock() {
+      /*récupérer l'heure actuelle*/
+      const date = new Date() 
+      const hours = (date.getHours() + 12) % 12;
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();  
+      /*calculer les degrés*/
+      const hour = (hours * 360) / 12;       /* ou hours * 30 */
+      const minute = (minutes * 360) / 60;   /* ou minutes * 6  */
+      const second = (seconds * 360) / 60;   /* ou minutes * 6  */
+      document.querySelector('.hour-hand').style.transform = `rotate(${hour}deg)`;
+      document.querySelector('.min-hand').style.transform = `rotate(${minute}deg)`;
+      document.querySelector('.second-hand').style.transform = `rotate(${second}deg)`;
+    };
+
+    /* Methode setInterval pour rappeler la fonction clock() toute les 1000ms*/
+    setInterval(clock, 1000);
+
+  </script>
+</body>
+</html>
