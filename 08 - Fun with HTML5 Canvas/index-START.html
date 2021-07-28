@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+
+    <div class="epaisseur">
+      <label for="spacing">Modifier l'epaisseur du trait</label>
+      <input type="range" id="spacing" name="spacing" value="10">
+    </div>
+    
+    <canvas id="draw"></canvas>
+<script>
+
+  const canvas = document.querySelector('#draw');
+  const ctx = canvas.getContext('2d');
+  /*définir la taille de la fenetre canvas*/
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  /*définir la couleur du canvas*/
+  canvas.style.backgroundColor = "black";
+  /*définir la couleur du trait*/
+  ctx.strokeStyle = '';
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  /*définir l'epaisseur du trait*/
+  ctx.lineWidth = 10;
+
+  /*déclaration du communatateur en réaction aux evennements de la souris*/
+  let activePen = false;
+  /*déclaration de la teinte*/
+  let hue = 0;
+
+  /*souris enfoncé*/
+  canvas.addEventListener('mousedown', event => {
+    activePen = true;
+    event.offsetX;
+    event.offsetY;
+  });
+
+  /*déplacement de la souris*/
+  canvas.addEventListener('mousemove', draw);
+
+/*fonction qui s'active quand le clic de la souris est enfoncé*/
+  function draw(event) {
+    if(activePen === true) {
+      /*commencer le dessin*/
+      ctx.beginPath();
+      /*point de départ de la souris*/
+      ctx.moveTo(event.offsetX, event.offsetY);
+      /*coordonné du trait*/
+      ctx.lineTo(event.offsetX, event.offsetY);
+      /*afficher le dessin*/
+      ctx.stroke();
+    } 
+    /*jouer avec la couleur*/
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    hue++;
+    if (hue >= 360) {
+      hue = 0;
+    }
+  };  
+
+/*evennement pour arreter le dessin quand on relache le clic de la souris*/
+  canvas.addEventListener('mouseup', () => activePen = false);
+
+
+/*ajout d'un input type range pour modifier l'epaisseur du trait*/
+  const spacing = document.querySelector("#spacing");
+  spacing.addEventListener('change', update);
+  function update() {
+    ctx.lineWidth = spacing.value;
+  };
+
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+
+  .epaisseur {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    padding: 0 20px;
+    align-items: center;
+  }
+  
+</style>
+
+</body>
+</html>
