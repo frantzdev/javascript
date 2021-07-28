@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log("Bonjour");
+
+    // Interpolated
+    console.log("Bonjour" + " 😀");
+
+    // Styled
+    console.log('%c Bonjour', 'font-size:15px; background:blue; text-shadow: 10px 10px 0 blue');
+
+    // warning!
+    console.warn('console.warn');
+    // Error :|
+    console.error('console.error');
+    // Info
+    console.info('console.info');
+    // Testing
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('test'), "cette classe n'est pas detectée");
+    
+    // clearing
+    // console.clear();
+
+    // Viewing DOM Elements
+    console.log(p);
+    console.dir(p);
+    // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`${dog.name} à ${dog.age} ans`);
+      console.groupEnd(`${dog.name}`);
+    })
+
+    // counting
+    console.count('Bonjour');
+    console.count('Bonjour');
+    console.count('hello');
+    console.count('hello');
+    console.count('hello');
+    console.count('Bonjour');
+    console.count('hello');
+
+    // timing
+    console.time('fetching data');
+    fetch('https://api.github.com/users/wesbos')
+      .then(response => response.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data);
+      });
+
+
+
+  </script>
+</body>
+</html>
